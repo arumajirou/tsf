@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "time-series-forecasting"
+version = "0.1.0"
+requires-python = ">=3.11"
+description = "Reproducible time-series forecasting scaffold"
+authors = [{name="Your Team"}]
+license = {text="MIT"}
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["src"]
+
+[tool.ruff]
+select = ["E","F","I","UP","B","SIM"]
+ignore = []
+line-length = 100
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+
+[project.scripts]
+tsf = "src.runner.cli:main"
