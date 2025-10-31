@@ -23,9 +23,10 @@ def validate_config(cfg: Dict[str, Any]) -> None:
 class RunManager:
     """設定に基づく fingerprint を返すだけの最小クラス"""
     def __init__(self, cfg: Dict[str, Any] | None = None, cfg_path: str | None = None) -> None:
+        # cfg/cfg_path の両方が None の場合も許容し、空設定 {} とする（回帰テストの前提）
         if cfg is None and cfg_path is None:
-            raise ValueError("cfg または cfg_path のどちらかは必須です。")
-        if cfg is None and cfg_path is not None:
+            cfg = {}
+        elif cfg is None and cfg_path is not None:
             cfg = resolve_config(cfg_path)
         self.cfg = cfg or {}
 
