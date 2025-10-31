@@ -7,3 +7,6 @@ training:
   epochs: 1
 tracking:
   backend: mlflow
+
+project:
+  name: tsf
