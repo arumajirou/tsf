@@ -11,6 +11,7 @@ COV_DIR="${OUT}/coverage_${TS}"
 
 mkdir -p "${OUT}" "${COV_DIR}"
 
+PYTHONPATH="$(pwd):${PYTHONPATH:-}" \
 pytest -n auto --maxfail=1 --color=yes \
   --reruns 1 --reruns-delay 2 \
   --html "${HTML}" --self-contained-html \
