@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="8" time="4.278" timestamp="2025-10-31T23:24:51.294048+09:00" hostname="az"><testcase classname="tests.unit.test_parent_resolver" name="test_prefix_resolver_basic" time="0.019" /><testcase classname="tests.contract.test_metrics_schema" name="test_metrics_summary_sample_has_required_fields" time="0.019" /><testcase classname="tests.unit.test_fingerprint_default" name="test_empty_cfg_fingerprint_is_stable" time="0.019" /><testcase classname="tests.regression.test_fingerprint" name="test_fingerprint_stability" time="0.022"><failure message="AssertionError: assert ('3a3f44df6436...e650e65b03841' == '3a3f44df6436...e650e65b03841'&#10;  &#10;  #x1B[0m#x1B[90m #x1B[39;49;00m 3a3f44df6436a58c93430c0f9776be77a32a4e275bacbdb93d8e650e65b03841#x1B[90m#x1B[39;49;00m and 64 == 16)&#10; +  where 64 = len('3a3f44df6436a58c93430c0f9776be77a32a4e275bacbdb93d8e650e65b03841')">def test_fingerprint_stability():
+        m = RunManager(None)
+        fp1 = m.compute_fingerprint(model_adapter_name="NHITS",
+                                    hyperparameters={"lr":0.001},
+                                    dataset_version="d", training_window={}, code_revision="x", random_seed=42)
+        fp2 = m.compute_fingerprint(model_adapter_name="NHITS",
+                                    hyperparameters={"lr":0.001},
+                                    dataset_version="d", training_window={}, code_revision="x", random_seed=42)
+&gt;       assert fp1 == fp2 and len(fp1) == 16
+E       AssertionError: assert ('3a3f44df6436...e650e65b03841' == '3a3f44df6436...e650e65b03841'
+E         
+E         #x1B[0m#x1B[90m #x1B[39;49;00m 3a3f44df6436a58c93430c0f9776be77a32a4e275bacbdb93d8e650e65b03841#x1B[90m#x1B[39;49;00m and 64 == 16)
+E        +  where 64 = len('3a3f44df6436a58c93430c0f9776be77a32a4e275bacbdb93d8e650e65b03841')
+
+tests/regression/test_fingerprint.py:14: AssertionError</failure></testcase><testcase classname="tests.smoke.test_cli_dry_run" name="test_cli_train_dry_run" time="0.183" /><testcase classname="tests.smoke.test_cli_forecast_dry_run" name="test_cli_forecast_dry_run" time="0.183" /><testcase classname="tests.unit.test_cli_help" name="test_cli_help_runs" time="0.184" /><testcase classname="tests.smoke.test_cli_backtest_dry_run" name="test_cli_backtest_dry_run" time="0.193" /></testsuite></testsuites>
