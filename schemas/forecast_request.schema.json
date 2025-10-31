@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "unique_id": {
+      "type": "string"
+    },
+    "ds": {
+      "type": "string"
+    },
+    "futr_": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "unique_id",
+    "ds"
+  ]
+}

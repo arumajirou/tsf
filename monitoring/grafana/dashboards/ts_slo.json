@@ -1,0 +1,44 @@
+{
+  "title": "TS System SLO (EN/JA)",
+  "uid": "ts-slo",
+  "timezone": "browser",
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Duplicate Skip Rate",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "rate(ts_duplicate_skip_total[5m])"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Backtest Latency (Histogram)",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(ts_backtest_latency_seconds_bucket[5m])) by (le))"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Error Budget Burn (1h)",
+      "targets": [
+        {
+          "expr": "rate(ts_metric_failure_total[1h])"
+        }
+      ]
+    }
+  ],
+  "templating": {
+    "list": [
+      {
+        "name": "slo",
+        "type": "textbox",
+        "query": "99.0"
+      }
+    ]
+  }
+}

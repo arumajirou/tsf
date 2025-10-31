@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "mae": {
+      "type": "number"
+    },
+    "rmse": {
+      "type": "number"
+    },
+    "smape": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "mae",
+    "rmse",
+    "smape"
+  ]
+}

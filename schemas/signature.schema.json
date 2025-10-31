@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "inputs": {
+      "type": "array"
+    },
+    "outputs": {
+      "type": "array"
+    }
+  },
+  "required": [
+    "inputs",
+    "outputs"
+  ]
+}

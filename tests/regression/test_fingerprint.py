@@ -1,0 +1,11 @@
+from src.core.run import RunManager
+
+def test_fingerprint_stability():
+    m = RunManager(None)
+    fp1 = m.compute_fingerprint(model_adapter_name="NHITS",
+                                hyperparameters={"lr":0.001},
+                                dataset_version="d", training_window={}, code_revision="x", random_seed=42)
+    fp2 = m.compute_fingerprint(model_adapter_name="NHITS",
+                                hyperparameters={"lr":0.001},
+                                dataset_version="d", training_window={}, code_revision="x", random_seed=42)
+    assert fp1 == fp2 and len(fp1) == 16

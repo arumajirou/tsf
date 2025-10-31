@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "files": {
+      "type": "integer"
+    },
+    "dirs": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "files",
+    "dirs"
+  ]
+}

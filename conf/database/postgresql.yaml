@@ -1,0 +1,2 @@
+driver: postgresql
+dsn: postgresql://localhost/ts_db

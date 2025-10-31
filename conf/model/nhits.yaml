@@ -1,0 +1,5 @@
+name: NHITS
+params:
+  input_size: 24
+  h: 7
+  learning_rate: 0.001

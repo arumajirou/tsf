@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "project"
+  ]
+}

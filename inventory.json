@@ -1,0 +1,25 @@
+{
+  "files_total": 41,
+  "dirs_total": 26,
+  "dir_kinds_total": 7,
+  "classes_total": 8,
+  "methods_total": 5,
+  "functions_total": 15,
+  "constants_total": 0,
+  "args_total": 19,
+  "returns_total": 12,
+  "params_total": 0,
+  "configs_total": 7,
+  "variables_total": 2,
+  "features_total": 9,
+  "db_tables_total": 5,
+  "migrations_total": 1,
+  "tests_total": {
+    "unit": 1,
+    "contract": 1,
+    "smoke": 1,
+    "regression": 1
+  },
+  "dashboards_total": 1,
+  "schemas_total": 9
+}

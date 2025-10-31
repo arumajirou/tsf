@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "unique_id": {
+      "type": "string"
+    },
+    "ds": {
+      "type": "string"
+    },
+    "y_pred": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "unique_id",
+    "ds",
+    "y_pred"
+  ]
+}

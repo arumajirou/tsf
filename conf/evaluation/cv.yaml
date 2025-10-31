@@ -1,0 +1,4 @@
+cv:
+  n_splits: 3
+  horizon: 7
+  expanding: true

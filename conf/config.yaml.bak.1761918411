@@ -1,0 +1,12 @@
+defaults:
+  - data: default
+  - model: nhits
+  - training: default
+  - evaluation: cv
+  - database: postgresql
+  - tracking: mlflow
+  - _self_
+
+project:
+  name: time_series_forecasting
+  version: 1.0.0

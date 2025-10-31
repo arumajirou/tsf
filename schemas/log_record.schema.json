@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "ts": {
+      "type": "number"
+    },
+    "level": {
+      "type": "string"
+    },
+    "msg": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "ts",
+    "level",
+    "msg"
+  ]
+}

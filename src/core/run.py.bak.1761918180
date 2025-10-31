@@ -1,0 +1,23 @@
+from __future__ import annotations
+import hashlib, json
+from typing import Any, Dict, Optional
+
+class RunManager:
+    """Compute stable run fingerprint; DB ops omitted in smoke path."""
+    def __init__(self, db_session: Optional[object] = None) -> None:
+        self.db = db_session
+
+    def compute_fingerprint(self, **kwargs: Any) -> str:
+        fp_dict = {
+            "model_adapter": kwargs.get("model_adapter_name"),
+            "model_version": kwargs.get("model_version_tag", "latest"),
+            "hyperparams": sorted(list(kwargs.get("hyperparameters", {}).items())),
+            "dataset_version": kwargs.get("dataset_version"),
+            "feature_set_id": kwargs.get("feature_set_id"),
+            "training_window": kwargs.get("training_window"),
+            "code_revision": kwargs.get("code_revision"),
+            "seed": kwargs.get("random_seed"),
+            "objective": kwargs.get("objective_config", {})
+        }
+        j = json.dumps(fp_dict, sort_keys=True, ensure_ascii=False)
+        return hashlib.sha256(j.encode("utf-8")).hexdigest()[:16]
