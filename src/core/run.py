@@ -20,8 +20,18 @@ def validate_config(cfg: Dict[str, Any]) -> None:
     if "project" not in cfg:
         print("[WARN] JSON Schema 検証をスキップ/非致命: 'project' is a required property")
 
+def _canonicalize(x: Any) -> Any:
+    """dictはキーソート、list/tupleは順序維持、setはソートして再帰的に正規化"""
+    if isinstance(x, dict):
+        return {k: _canonicalize(x[k]) for k in sorted(x)}
+    if isinstance(x, (list, tuple)):
+        return [ _canonicalize(i) for i in x ]
+    if isinstance(x, (set, frozenset)):
+        return sorted([ _canonicalize(i) for i in x ])
+    return x
+
 class RunManager:
-    """設定に基づく fingerprint を返すだけの最小クラス"""
+    """指紋（fingerprint）計算の最小実装"""
     def __init__(self, cfg: Dict[str, Any] | None = None, cfg_path: str | None = None) -> None:
         # cfg/cfg_path の両方が None の場合も許容し、空設定 {} とする（回帰テストの前提）
         if cfg is None and cfg_path is None:
@@ -31,6 +41,34 @@ class RunManager:
         self.cfg = cfg or {}
 
     def fingerprint(self) -> str:
-        # 安定化のため JSON canonical 化 → sha256
+        """現在の cfg のみを材料にしたハッシュ（互換維持）"""
         canon = json.dumps(self.cfg, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+        return hashlib.sha256(canon.encode("utf-8")).hexdigest()
+
+    def compute_fingerprint(
+        self,
+        *,
+        model_adapter_name: str,
+        hyperparameters: Dict[str, Any] | None = None,
+        dataset_version: str | None = None,
+        training_window: Dict[str, Any] | None = None,
+        code_revision: str | None = None,
+        random_seed: int | None = None,
+        **extra: Any,
+    ) -> str:
+        """学習条件一式から安定な指紋を算出"""
+        payload = {
+            "version": 1,  # 将来の互換性のためのバージョン
+            "base_cfg_hash": self.fingerprint(),  # cfg変更の影響を反映
+            "model_adapter_name": model_adapter_name,
+            "hyperparameters": _canonicalize(hyperparameters or {}),
+            "dataset_version": dataset_version,
+            "training_window": _canonicalize(training_window or {}),
+            "code_revision": code_revision,
+            "random_seed": int(random_seed) if random_seed is not None else None,
+        }
+        if extra:
+            payload["extra"] = _canonicalize(extra)
+
+        canon = json.dumps(payload, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
         return hashlib.sha256(canon.encode("utf-8")).hexdigest()
