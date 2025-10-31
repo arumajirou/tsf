@@ -15,11 +15,15 @@ def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="tsf", description="Time Series Forecasting runner")
     sub = p.add_subparsers(dest="command", required=True)
 
-    for name in ("run", "train"):  # train を run のエイリアスとして実装
+    for name in ("run", "train", "forecast", "backtest"):
         sp = sub.add_parser(name, help="設定を読み込み、（dry-run時は）解析のみ実施")
         sp.add_argument("--config", "-c", type=str, default="conf/config.yaml", help="メイン設定ファイル（YAML）")
         sp.add_argument("--dry-run", action="store_true", help="設定解決と検証のみ（学習/推論は実行しない）")
     return p
+
+
+def _end_marker(cmd: str) -> str:
+    return {"train": "TRAIN END", "forecast": "FORECAST END", "backtest": "BACKTEST END"}.get(cmd, "")
 
 
 def cmd_run(args: argparse.Namespace) -> int:
@@ -39,21 +43,22 @@ def cmd_run(args: argparse.Namespace) -> int:
                 important[k] = resolved[k]
         print(yaml.safe_dump(important, sort_keys=False, allow_unicode=True))
         print("OK: 設定は有効です（学習/推論は実行していません）")
-        if getattr(args, "command", "") == "train":
-            print("TRAIN END")
+        mark = _end_marker(getattr(args, "command", ""))
+        if mark:
+            print(mark)
         return 0
 
-    print("TODO: 学習/推論/バックテストの実処理をこの先に実装します。")
-    if getattr(args, "command", "") == "train":
-        print("TRAIN END")
+    # TODO: 実処理（train/forecast/backtest）をここに実装
+    mark = _end_marker(getattr(args, "command", ""))
+    if mark:
+        print(mark)
     return 0
 
 
 def main(argv=None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
-    if args.command in ("run", "train"):
-        # subparser で付与した値を関数側でも使えるように保持
+    if args.command in ("run", "train", "forecast", "backtest"):
         return cmd_run(args)
     parser.print_help()
     return 1
