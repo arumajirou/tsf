@@ -1,0 +1,9 @@
+name: time_series_forecasting
+data:
+  path: ./samples/data.csv
+model:
+  name: NHITS
+training:
+  epochs: 1
+tracking:
+  backend: mlflow
