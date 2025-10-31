@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="1" failures="0" skipped="0" tests="1" time="2.316" timestamp="2025-10-31T22:59:14.168491+09:00" hostname="az"><testcase classname="" name="tests.regression.test_fingerprint" time="0.000"><error message="collection failure">ImportError while importing test module '/mnt/e/env/ts/tsf/tests/regression/test_fingerprint.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/home/az/miniconda3/envs/nc/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/regression/test_fingerprint.py:1: in &lt;module&gt;
+    from src.core.run import RunManager
+E   ModuleNotFoundError: No module named 'src'</error></testcase></testsuite></testsuites>
