@@ -12,3 +12,9 @@
 - Alembic migrations (experiments/runs/metrics/artifacts/runs_ext)
 
 See `RUNBOOK.md` for exact commands (JA/EN).
+
+### Run fingerprint (stable & length-configurable)
+- `RunManager.fingerprint()` returns a **64-char** SHA-256 of canonicalized cfg (cfg-only).
+- `RunManager.compute_fingerprint(..., length=16)` returns a **short, stable ID** by default.
+  Pass `length=64` for the full hash.
+- Allowed lengths: even numbers in **[4, 64]**. Short IDs are **prefixes** of the 64-char hex.
