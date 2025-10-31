@@ -39,9 +39,13 @@ def cmd_run(args: argparse.Namespace) -> int:
                 important[k] = resolved[k]
         print(yaml.safe_dump(important, sort_keys=False, allow_unicode=True))
         print("OK: 設定は有効です（学習/推論は実行していません）")
+        if getattr(args, "command", "") == "train":
+            print("TRAIN END")
         return 0
 
     print("TODO: 学習/推論/バックテストの実処理をこの先に実装します。")
+    if getattr(args, "command", "") == "train":
+        print("TRAIN END")
     return 0
 
 
@@ -49,6 +53,7 @@ def main(argv=None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
     if args.command in ("run", "train"):
+        # subparser で付与した値を関数側でも使えるように保持
         return cmd_run(args)
     parser.print_help()
     return 1
