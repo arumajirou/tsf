@@ -1,3 +1,6 @@
+import pytest
+pytest.importorskip("src.core.run")
+
 from src.core.run import RunManager
 
 def test_fingerprint_stability():
